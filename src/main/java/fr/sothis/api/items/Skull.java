@@ -33,7 +33,7 @@ public class Skull {
     }
 
     public Skull(String url) {
-        itemWithUrl(createSkull(), url);
+        itemWithUrl(url);
     }
 
     private ItemStack createSkull() {
@@ -44,7 +44,8 @@ public class Skull {
         }
     }
 
-    public Skull skullFromName(ItemStack item, String name) {
+    public Skull skullFromName(String name) {
+        ItemStack item = createSkull();
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwner(name);
         item.setItemMeta(meta);
@@ -61,11 +62,12 @@ public class Skull {
         return item;
     }
 
-    public void itemWithUrl(ItemStack item, String url) {
-        skullFromBase64(item, urlToBase64(url));
+    public void itemWithUrl(String url) {
+        skullFromBase64(urlToBase64(url));
     }
 
-    public Skull skullFromBase64(ItemStack item, String base64) {
+    public Skull skullFromBase64(String base64) {
+        ItemStack item = createSkull();
         if (!(item.getItemMeta() instanceof SkullMeta)) {
             return null;
         }
