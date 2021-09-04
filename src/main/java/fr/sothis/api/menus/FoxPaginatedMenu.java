@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class SPaginatedMenu extends SMenu {
+public abstract class FoxPaginatedMenu extends FoxMenu {
 
     protected List<Object> data;
     protected int page = 0;
@@ -18,7 +18,7 @@ public abstract class SPaginatedMenu extends SMenu {
     protected ItemStack rightbutton = setRightButton();
     protected ItemStack backbutton = setBackButton();
 
-    public SPaginatedMenu(SUtility playerUtility) {
+    public FoxPaginatedMenu(FoxUtility playerUtility) {
         super(playerUtility);
     }
 

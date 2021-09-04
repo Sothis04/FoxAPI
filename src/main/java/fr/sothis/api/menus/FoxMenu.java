@@ -1,5 +1,8 @@
 package fr.sothis.api.menus;
 
+import fr.sothis.api.buttons.Button;
+import fr.sothis.api.buttons.ButtonManager;
+import fr.sothis.api.buttons.State;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -9,24 +12,30 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public abstract class SMenu extends SMenuInfo implements InventoryHolder {
+public abstract class FoxMenu extends FoxMenuInfo implements InventoryHolder {
 
-    protected SUtility playerUtility;
-    protected SMenuInfo menuInfo;
+    protected FoxUtility playerUtility;
+    protected FoxMenuInfo menuInfo;
     protected Player player;
     protected Inventory inventory;
+    protected HashMap<String, Button> buttonFromKey = new HashMap<>();
 
-    public SMenu(SUtility sUtility) {
+    public FoxMenu(FoxUtility foxUtility) {
         HashMap<ItemStack, Integer> items = new HashMap<>();
         int size = setSize().getNumber();
         for (int i = 0; i < size ; i++)
             items.put(inventory.getItem(i), i);
-        this.playerUtility = sUtility;
-        this.player = sUtility.getPlayer();
+        this.playerUtility = foxUtility;
+        this.player = foxUtility.getPlayer();
         super.setName(setName());
         super.setItems(items);
         super.setSize(setSize());
         super.setCancelClick(enablePickItem());
+    }
+
+    public void placeButton(String key, State state) {
+        Button button = ButtonManager.getAllButtons().get(key);
+        button.getConsumerHashMap().get(state).accept(inventory);
     }
 
     public abstract String setName();
@@ -67,7 +76,7 @@ public abstract class SMenu extends SMenuInfo implements InventoryHolder {
         MenuManager.openMenu(this.getClass(), player);
     }
 
-    public SMenuInfo getMenuInfo() {
+    public FoxMenuInfo getMenuInfo() {
         return menuInfo;
     }
 

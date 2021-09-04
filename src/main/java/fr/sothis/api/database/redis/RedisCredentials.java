@@ -36,10 +36,6 @@ public class RedisCredentials {
         return ip + ":" + port;
     }
 
-    public String toNewRedisURL() {
-        return "redis://" + ip + ":" + port;
-    }
-
     public int getDatabase() {
         return database;
     }

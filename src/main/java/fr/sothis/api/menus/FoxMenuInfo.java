@@ -4,7 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class SMenuInfo {
+public class FoxMenuInfo {
 
     private String name;
     private Size size;

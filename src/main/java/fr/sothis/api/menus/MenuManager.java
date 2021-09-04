@@ -1,6 +1,5 @@
 package fr.sothis.api.menus;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +13,10 @@ import org.bukkit.plugin.RegisteredListener;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class MenuManager implements Listener {
 
-    private static final HashMap<Player, SUtility> registerSUtility = new HashMap<>();
+    private static final HashMap<Player, FoxUtility> registerSUtility = new HashMap<>();
 
     public static void registerMenuListener(Server server, Plugin plugin) {
         boolean registered = false;
@@ -41,7 +39,7 @@ public class MenuManager implements Listener {
             if (event.getCurrentItem() == null) {
                 return;
             }
-            SMenu menu = (SMenu) holder;
+            FoxMenu menu = (FoxMenu) holder;
             if (!menu.enablePickItem()){
                 event.setCancelled(true);
             }
@@ -54,19 +52,19 @@ public class MenuManager implements Listener {
 
     }
 
-    public static void openMenu(Class<? extends SMenu> menuClass, Player player) {
+    public static void openMenu(Class<? extends FoxMenu> menuClass, Player player) {
         getSUtility(player).getLastMenu().onCloseInventory();
         try {
-            menuClass.getConstructor(SUtility.class).newInstance(getSUtility(player)).open();
+            menuClass.getConstructor(FoxUtility.class).newInstance(getSUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
 
-    public static SUtility getSUtility(Player player) {
-        SUtility sPlayer;
+    public static FoxUtility getSUtility(Player player) {
+        FoxUtility sPlayer;
         if (!(registerSUtility.containsKey(player))) {
-            sPlayer = new SUtility(player);
+            sPlayer = new FoxUtility(player);
             registerSUtility.put(player, sPlayer);
             return sPlayer;
         } else {

@@ -1,7 +1,5 @@
 package fr.sothis.api.database.sql;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import java.sql.Connection;
 import java.util.HashMap;
 

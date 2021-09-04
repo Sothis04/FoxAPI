@@ -3,7 +3,9 @@ package fr.sothis.api;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import fr.sothis.api.buttons.Button;
+import fr.sothis.api.buttons.ButtonManager;
+import fr.sothis.api.buttons.State;
 import fr.sothis.api.database.Credentials;
 import fr.sothis.api.database.Database;
 import fr.sothis.api.database.DatabaseManager;
@@ -11,10 +13,14 @@ import fr.sothis.api.database.nosql.NoSQLManager;
 import fr.sothis.api.database.redis.RedisManager;
 import fr.sothis.api.database.sql.SQLManager;
 import fr.sothis.api.database.sql.SQLMethod;
+import fr.sothis.api.items.FoxBuilder;
 import fr.sothis.api.menus.MenuManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
@@ -22,7 +28,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
-public class FoxApi {
+public class FoxApi extends JavaPlugin {
 
     public static FoxApi INSTANCE;
     private Server server;
@@ -33,6 +39,16 @@ public class FoxApi {
     private HashMap<String, Consumer<HikariConfig>> consumerHikari = new HashMap<>();
     private HashMap<String, Consumer<Config>> consumerRedisson = new HashMap<>();
     private SQLMethod sqlMethod;
+
+    @Override
+    public void onEnable() {
+        enable(getServer(), this);
+    }
+
+    @Override
+    public void onDisable() {
+        disable();
+    }
 
     public void enable(Server server, Plugin plugin) {
         INSTANCE = this;
@@ -45,20 +61,6 @@ public class FoxApi {
         Bukkit.getLogger().info("FoxAPI initialized");
         MenuManager.registerMenuListener(server, plugin);
         databaseManager.enable();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     public void disable() {
@@ -121,10 +123,6 @@ public class FoxApi {
 
     public static FoxApi getINSTANCE() {
         return INSTANCE;
-    }
-
-    public Server getServer() {
-        return server;
     }
 
     public SQLManager getSqlManager() {

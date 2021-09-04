@@ -5,13 +5,13 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class SUtility {
+public class FoxUtility {
 
     private final Player player;
-    private final Vector<SMenu> historic = new Vector<>();
+    private final Vector<FoxMenu> historic = new Vector<>();
     private final HashMap<String, Object> dataMap = new HashMap<>();
 
-    public SUtility(Player player) {
+    public FoxUtility(Player player) {
         this.player = player;
     }
 
@@ -53,17 +53,17 @@ public class SUtility {
         }
     }
 
-    public SMenu getLastMenu() {
+    public FoxMenu getLastMenu() {
         return historic.lastElement();
     }
 
-    public SMenu backMenu() {
-        SMenu sMenu = historic.lastElement();
-        historic.remove(sMenu);
-        return sMenu;
+    public FoxMenu backMenu() {
+        FoxMenu foxMenu = historic.lastElement();
+        historic.remove(foxMenu);
+        return foxMenu;
     }
 
-    public void pushMenu(SMenu menu) {
+    public void pushMenu(FoxMenu menu) {
         historic.add(menu);
     }
 }
